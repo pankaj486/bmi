@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { addTask, addDate } from '../state/action-creator/BmiAction';
 import Plot from 'react-plotly.js';
 import "./BmiConverter.css";
@@ -20,7 +20,7 @@ interface Inputs {
 
 const TestFile: React.FC = () => {
 
-    const name = useRef("");
+    // const name = useRef("");
 
 
     // const [text, setText] = useState<Inputs>({
@@ -57,7 +57,7 @@ const TestFile: React.FC = () => {
 
 
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
     const onFormSubmit: SubmitHandler<Inputs> = (text) => {
 
         const userHeight = text.height;
@@ -83,19 +83,27 @@ const TestFile: React.FC = () => {
                 <h3 className="h3-text">BMI Tracker</h3>
                 <form className='input' onSubmit={handleSubmit(onFormSubmit)}>
                     <div className='input-inline'>
-                        <label className='text-color'>Enter Weight(kg): </label>
-                        <input placeholder='Enter Weight'  {...register("weight", { required: true })} />
-                        {errors.weight && errors.weight.type === 'required' && <span style={{ color: 'red' }}>{"Plesse Enter Your Weight"}</span>}
+                        <label className='text-color'>Weight(kg): </label>
+                        <input placeholder='Enter Weight' type="number"  {...register("weight", { required: true })} />
+                        <br />
+                        <br />
+                        {errors.weight && errors.weight.type === 'required' && <span style={{ color: 'white' }}>{"*Plesse Enter Your Weight"}</span>}
+                        {/* {errors.weight && errors.weight.type === 'string' && <span style={{ color: 'white' }}>{"Plesse Enter The Number Not String"}</span>} */}
                     </div>
                     <div className='input-inline'>
-                        <label className='text-color'>Enter Height(cm): </label>
-                        <input placeholder='Enter Height'  {...register("height", { required: true })} />
-                        {errors.height && errors.height.type === 'required' && <span style={{ color: 'red' }}>{"Please Enter your Height"}</span>}
+                        <label className='text-color'>Height(cm): </label>
+                        <input placeholder='Enter Height' type="number"  {...register("height", { required: true })} />
+                        <br />
+                        <br />
+                        {errors.height && errors.height.type === 'required' && <span style={{ color: 'white' }}>{"*Please Enter your Height"}</span>}
+                        {/* {errors.height && errors.height.type === 'string' && <span style={{ color: 'white' }}>{"Plesse Enter The Number Not String"}</span>} */}
                     </div>
                     <div className='input-inline'>
                         <label className='text-color'>Date: </label>
                         <input type="date"  {...register("date", { required: true })} />
-                        {errors.date && errors.date.type === 'required' && <span style={{ color: 'red' }}>{"Please Enter Date"}</span>}
+                        <br />
+                        <br />
+                        {errors.date && errors.date.type === 'required' && <span style={{ color: 'white' }}>{"*Please Enter Date"}</span>}
                     </div>
                     <div className="button">
                         <button>Convert</button>
