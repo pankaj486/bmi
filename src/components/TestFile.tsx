@@ -4,6 +4,7 @@ import { addTask, addDate } from '../state/action-creator/BmiAction';
 import Plot from 'react-plotly.js';
 import "./BmiConverter.css";
 import { useTypedSelector } from '../hooks/use-typed-selector';
+import { useForm, SubmitHandler } from "react-hook-form";
 
 
 
@@ -17,44 +18,27 @@ interface Inputs {
 }
 
 
-const BmiConverter: React.FC = () => {
+const TestFile: React.FC = () => {
 
     const name = useRef("");
 
 
-    const [text, setText] = useState<Inputs>({
-        weight: '',
-        height: '',
-        date: ""
-    });
+    // const [text, setText] = useState<Inputs>({
+    //     weight: '',
+    //     height: '',
+    //     date: ""
+    // });
 
-    const onChangeHandler = (event: any) => {
-        const { name, value } = event.target
-        setText((prev) => {
-            return {
-                ...prev,
-                [name]: value
-            }
-        })
-    }
+    // const onChangeHandler = () => {
+    //     setText((prev) => {
+    //         return {
+    //             ...prev
+    //         }
+    //     })
+    // }
 
     const dispatch = useDispatch();
     // debugger
-    const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.preventDefault();
-        const userHeight = text.height;
-        if (!userHeight) { return }
-        const userWeight = text.weight;
-        if (!userWeight) { return }
-        const heightInCm = userHeight / 100;
-        // console.log(heightInCm, userWeight)
-        const bmiConverter = Math.round(userWeight / heightInCm ** 2);
-        const myDate = text.date;
-        if (!myDate) { return }
-        // console.log(bmiConverter);
-        dispatch(addTask(bmiConverter));
-        dispatch(addDate(myDate));
-    }
 
 
     const myBmiData = useTypedSelector(({ bmiConverter }) => bmiConverter.bmiData)
@@ -73,13 +57,56 @@ const BmiConverter: React.FC = () => {
 
 
 
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+    const onFormSubmit: SubmitHandler<Inputs> = (text) => {
+
+        const userHeight = text.height;
+        // if (!userHeight) { return }
+        const userWeight = text.weight;
+        // if (!userWeight) { return }
+        const heightInCm = userHeight / 100;
+        // console.log(heightInCm, userWeight)
+        const bmiConverter = Math.round(userWeight / heightInCm ** 2);
+        const myDate = text.date;
+        // if (!myDate) { return }
+        // console.log(bmiConverter);
+        dispatch(addTask(bmiConverter));
+        dispatch(addDate(myDate));
+    };
+
+
     return (
         <div>
             {/* <Test /> */}
 
-            <div>
+            <div >
                 <h3 className="h3-text">BMI Tracker</h3>
-                <div className="input">
+                <form className='input' onSubmit={handleSubmit(onFormSubmit)}>
+                    <div className='input-inline'>
+                        <label className='text-color'>Enter Weight(kg): </label>
+                        <input placeholder='Enter Weight'  {...register("weight", { required: true })} />
+                        {errors.weight && errors.weight.type === 'required' && <span style={{ color: 'red' }}>{"Plesse Enter Your Weight"}</span>}
+                    </div>
+                    <div className='input-inline'>
+                        <label className='text-color'>Enter Height(cm): </label>
+                        <input placeholder='Enter Height'  {...register("height", { required: true })} />
+                        {errors.height && errors.height.type === 'required' && <span style={{ color: 'red' }}>{"Please Enter your Height"}</span>}
+                    </div>
+                    <div className='input-inline'>
+                        <label className='text-color'>Date: </label>
+                        <input type="date"  {...register("date", { required: true })} />
+                        {errors.date && errors.date.type === 'required' && <span style={{ color: 'red' }}>{"Please Enter Date"}</span>}
+                    </div>
+                    <div className="button">
+                        <button>Convert</button>
+                    </div>
+                </form>
+
+
+                {/* <div className="button">
+                    <button onClick={onFormSubmit}>Convert</button>
+                </div> */}
+                {/* <div className="input">
                     <div className="input-inline">
                         <label className="text-color">Enter Weight(kg): </label>
                         <input required={true} name="weight" value={text.weight} onChange={onChangeHandler} />
@@ -102,7 +129,7 @@ const BmiConverter: React.FC = () => {
                 </div>
                 <div className="button">
                     <button onClick={onClickHandler}>Convert</button>
-                </div>
+                </div> */}
 
                 {/* <button onClick={() => console.log(dispatch(BmiAction("pankaj")))}>Click Me</button> */}
                 <div className='plot-container'>
@@ -131,16 +158,15 @@ const BmiConverter: React.FC = () => {
                                     // size: 18,
                                     color: '#fff'
                                 },
-                                xaxis: { title: "7 DAYS" }, yaxis: { title: "BMI" }
+                                xaxis: { title: "7 DAYS", tickformat: '%b,%d, %Y' }, yaxis: { title: "BMI" },
                             }
                         }
                     />
                 </div>
             </div>
-
         </div>
 
     );
 }
 
-export default BmiConverter;
+export default TestFile;

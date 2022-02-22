@@ -19,7 +19,7 @@ body {
 }
 
 input {
-    width: 100%;
+    width: 80%;
     height: 25px;
     border-radius: 50px;
     border: 0;
@@ -27,17 +27,17 @@ input {
 }
 
 .button {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
+    /* display: flex;
+    justify-content: center; */
+    margin-top: 20px;
     border: 0;
 }
 
 .button button {
-    border-radius: 50px;
+    border-radius: 20px;
     color: black;
     background-color: white;
-    padding: 4px 8px;
+    padding: 8px 10px;
 } 
 
 .h3-text {

@@ -1,5 +1,7 @@
 import React from 'react';
 import BmiConverter from './components/BmiConverter';
+import TestFile from './components/TestFile';
+
 
 
 
@@ -8,7 +10,9 @@ import BmiConverter from './components/BmiConverter';
 const App = () => {
   return (
     <div>
-      <BmiConverter />
+      {/* <BmiConverter /> */}
+      {/* <TestBmiFile /> */}
+      <TestFile />
     </div>
   );
 }
