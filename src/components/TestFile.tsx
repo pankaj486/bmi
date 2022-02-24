@@ -12,34 +12,15 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 
 interface Inputs {
-    height: any;
-    weight: any;
+    height: number;
+    weight: number;
     date: string;
 }
 
 
 const TestFile: React.FC = () => {
 
-    // const name = useRef("");
-
-
-    // const [text, setText] = useState<Inputs>({
-    //     weight: '',
-    //     height: '',
-    //     date: ""
-    // });
-
-    // const onChangeHandler = () => {
-    //     setText((prev) => {
-    //         return {
-    //             ...prev
-    //         }
-    //     })
-    // }
-
     const dispatch = useDispatch();
-    // debugger
-
 
     const myBmiData = useTypedSelector(({ bmiConverter }) => bmiConverter.bmiData)
     console.log(myBmiData);
@@ -61,15 +42,10 @@ const TestFile: React.FC = () => {
     const onFormSubmit: SubmitHandler<Inputs> = (text) => {
 
         const userHeight = text.height;
-        // if (!userHeight) { return }
         const userWeight = text.weight;
-        // if (!userWeight) { return }
         const heightInCm = userHeight / 100;
-        // console.log(heightInCm, userWeight)
         const bmiConverter = Math.round(userWeight / heightInCm ** 2);
         const myDate = text.date;
-        // if (!myDate) { return }
-        // console.log(bmiConverter);
         dispatch(addTask(bmiConverter));
         dispatch(addDate(myDate));
     };
@@ -88,7 +64,6 @@ const TestFile: React.FC = () => {
                         <br />
                         <br />
                         {errors.weight && errors.weight.type === 'required' && <span style={{ color: 'white' }}>{"*Plesse Enter Your Weight"}</span>}
-                        {/* {errors.weight && errors.weight.type === 'string' && <span style={{ color: 'white' }}>{"Plesse Enter The Number Not String"}</span>} */}
                     </div>
                     <div className='input-inline'>
                         <label className='text-color'>Height(cm): </label>
@@ -96,7 +71,6 @@ const TestFile: React.FC = () => {
                         <br />
                         <br />
                         {errors.height && errors.height.type === 'required' && <span style={{ color: 'white' }}>{"*Please Enter your Height"}</span>}
-                        {/* {errors.height && errors.height.type === 'string' && <span style={{ color: 'white' }}>{"Plesse Enter The Number Not String"}</span>} */}
                     </div>
                     <div className='input-inline'>
                         <label className='text-color'>Date: </label>
@@ -110,36 +84,6 @@ const TestFile: React.FC = () => {
                     </div>
                 </form>
 
-
-                {/* <div className="button">
-                    <button onClick={onFormSubmit}>Convert</button>
-                </div> */}
-                {/* <div className="input">
-                    <div className="input-inline">
-                        <label className="text-color">Enter Weight(kg): </label>
-                        <input required={true} name="weight" value={text.weight} onChange={onChangeHandler} />
-                    </div>
-                    <div className="input-inline">
-                        <label className="text-color">Enter Height(cm): </label>
-                        <input
-                            required={true}
-                            name="height"
-                            value={text.height}
-                            onChange={onChangeHandler}
-                        />
-
-                    </div>
-                    <div className="input-inline">
-                        <label className="text-color">Enter Date: </label>
-                        <input required={true} type="date" name="date" value={text.date} onChange={onChangeHandler} />
-
-                    </div>
-                </div>
-                <div className="button">
-                    <button onClick={onClickHandler}>Convert</button>
-                </div> */}
-
-                {/* <button onClick={() => console.log(dispatch(BmiAction("pankaj")))}>Click Me</button> */}
                 <div className='plot-container'>
                     <Plot
 
@@ -151,7 +95,6 @@ const TestFile: React.FC = () => {
                                 type: 'scatter',
                                 name: 'BMI Tracker'
                             },
-                            // { type: 'scatter', x: [list1], y: [list2] },
 
                         ]}
                         layout={
